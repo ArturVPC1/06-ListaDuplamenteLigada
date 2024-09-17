@@ -2,14 +2,15 @@
 using namespace std;
 
 // definicao de tipo
-struct NO {
+struct NO
+{
 	int valor;
-	NO* prox;
-	NO* ant;
+	NO *prox;
+	NO *ant;
 };
 
-NO* primeiro = NULL;
-NO* ultimo = NULL;
+NO *primeiro = NULL;
+NO *ultimo = NULL;
 
 // headers
 void menu();
@@ -23,7 +24,6 @@ void excluirUltimoElemento();
 
 //--------------------------
 
-
 int main()
 {
 	menu();
@@ -32,10 +32,12 @@ int main()
 void menu()
 {
 	int op = 0;
-	while (op != 8) {
+	while (op != 8)
+	{
 		system("cls"); // somente no windows
 		cout << "Menu Lista Ligada";
-		cout << endl << endl;
+		cout << endl
+			 << endl;
 		cout << "1 - Inicializar Lista \n";
 		cout << "2 - Inserir elemento \n";
 		cout << "3 - Exibir quantidade de elementos \n";
@@ -50,19 +52,26 @@ void menu()
 
 		switch (op)
 		{
-		case 1: inicializar();
+		case 1:
+			inicializar();
 			break;
-		case 2:inserirElemento();
+		case 2:
+			inserirElemento();
 			break;
-		case 3: exibirQuantidadeElementos(); 
+		case 3:
+			exibirQuantidadeElementos();
 			break;
-		case 4: exibirElementos();
+		case 4:
+			exibirElementos();
 			break;
-		case 5: exibirReverso();
+		case 5:
+			exibirReverso();
 			break;
-		case 6: excluirPrimeiroElemento();
+		case 6:
+			excluirPrimeiroElemento();
 			break;
-		case 7: excluirUltimoElemento();
+		case 7:
+			excluirUltimoElemento();
 			break;
 		case 8:
 			return;
@@ -77,10 +86,11 @@ void menu()
 void inicializar()
 {
 	// se a lista ja possuir elementos
-// libera a memoria ocupada
-	NO* aux = primeiro;
-	while (aux != NULL) {
-		NO* paraExcluir = aux;
+	// libera a memoria ocupada
+	NO *aux = primeiro;
+	while (aux != NULL)
+	{
+		NO *paraExcluir = aux;
 		aux = aux->prox;
 		free(paraExcluir);
 	}
@@ -88,31 +98,34 @@ void inicializar()
 	primeiro = NULL;
 	ultimo = NULL;
 	cout << "Lista inicializada \n";
-
 }
 
-void exibirQuantidadeElementos() {
+void exibirQuantidadeElementos()
+{
 
 	int nElementos = 0;
-	NO* aux = primeiro;
-	while (aux != NULL) {
+	NO *aux = primeiro;
+	while (aux != NULL)
+	{
 		nElementos++;
 		aux = aux->prox;
 	}
 	cout << "Quantidade de elementos: " << nElementos << endl;
-
 }
 
 void exibirElementos()
 {
-	if (primeiro == NULL) {
+	if (primeiro == NULL)
+	{
 		cout << "Lista vazia \n";
 		return;
 	}
-	else {
+	else
+	{
 		cout << "Elementos: \n";
-		NO* aux = primeiro;
-		while (aux != NULL) {
+		NO *aux = primeiro;
+		while (aux != NULL)
+		{
 			cout << aux->valor << endl;
 			aux = aux->prox;
 		}
@@ -122,7 +135,7 @@ void exibirElementos()
 void inserirElemento()
 {
 	// aloca memoria dinamicamente para o novo elemento
-	NO* novo = (NO*)malloc(sizeof(NO));
+	NO *novo = (NO *)malloc(sizeof(NO));
 	if (novo == NULL)
 	{
 		return;
@@ -146,25 +159,70 @@ void inserirElemento()
 	}
 }
 
-
 // funções a serem implementadas no exericio
-void exibirReverso()
-{
-
-}
-
 void excluirPrimeiroElemento()
 {
+	if (primeiro == NULL)
+    {
+        cout << "Lista vazia \n";
+        return;
+    }
 
+    NO *paraExcluir = primeiro;
+    primeiro = primeiro->prox;
+
+    if (primeiro!= NULL)
+    {
+        primeiro->ant = NULL;
+    }
+    else
+    {
+        ultimo = NULL;
+    }
+
+    free(paraExcluir);
+	cout << "Primeiro elemento excluido \n";
 }
 
 void excluirUltimoElemento()
 {
+	if (ultimo == NULL)
+    {
+        cout << "Lista vazia \n";
+        return;
+    }
 
+    NO *paraExcluir = ultimo;
+    ultimo = ultimo->ant;
+
+    if (ultimo!= NULL)
+    {
+        ultimo->prox = NULL;
+    }
+    else
+    {
+        primeiro = NULL;
+    }
+
+    free(paraExcluir);
+    cout << "Ultimo elemento excluido \n";
 }
-
-
-
-
-
-
+void exibirReverso()
+{
+	if (ultimo == NULL)
+    {
+        cout << "Lista vazia \n";
+        return;
+    }
+    else
+    {
+        cout << "Elementos na ordem reversa: \n";
+        NO *aux = ultimo;
+        while (aux!= NULL)
+        {
+            cout << aux->valor << endl;
+            aux = aux->ant;
+        }
+    }
+    cout << endl;
+}
